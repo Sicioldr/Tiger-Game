@@ -4,7 +4,7 @@
 class Token{
 private:
     int location; //Make this a pointer to node object?
-    bool alive;
+    bool attached;
 
 public:
     //Overridden constructor
@@ -13,31 +13,34 @@ public:
     //Getter function for the active node
     int getLocation();
 
-    //Reports alive/dead
-    bool isAlive();
+    //Virtual space for set responses of children
+    virtual bool isTiger();
 
-    //Set alive to false
-    void kill();
+    //Used for mouse movement
+    bool isAttached();
 
+    //Change value of location
+    void moveToNode(int destination);
 };
 
-Token::Token(){
-    this->location = 0;
-    this->alive = true;
-}
+class Hunter : public Token{
+private:
+    bool isAlive;
 
-int Token::getLocation(){
+public:
+    //Adds value for isAlive to constructor
+    Hunter();
 
-    return this->location;
-}
+    //Return true
+    bool isTiger();
+};
 
-bool Token::isAlive(){
+class Tiger : public Token{
+private:
 
-    return this->alive;
-}
-
-void Token::kill(){
-    this->alive = false;
-}
+public:
+    //Return true
+    bool isTiger();
+};
 
 #endif // TOKEN_H_INCLUDED
