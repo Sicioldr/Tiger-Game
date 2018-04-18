@@ -1,6 +1,8 @@
 #ifndef TOKEN_H_INCLUDED
 #define TOKEN_H_INCLUDED
 
+#include "Node.h"
+
 class Token{
 private:
     int location; //Make this a pointer to node object?
