@@ -17,9 +17,9 @@ enum Direction{None, Up, Down, Left, Right, UpLeft, DownLeft, UpRight, DownRight
 
 class Board{
 private:
+    Node spots[GAME_SIZE];
     Tiger shereKhan;
     Hunter jaeger[HUNTER_COUNT];
-    Node spots[GAME_SIZE];
     int hunterPopulation;
 
     void arrangeNodes();
@@ -27,8 +27,11 @@ private:
 public:
     Board();
 
-    //Check adjacencies
-    Direction checkAdjacent(int origin, int target);
+    //To be replaced with function on Luke's computer, ETA 2018-04-24
+    bool checkAdjacency(Hunter first, Hunter second);
+
+    //For capturing Hunter tokens; uses Board::checkAdjacent() and Node::moveToNode()
+    bool setUpPounce(Tiger emptyStomach, Hunter snack);
 };
 
 #endif // BOARD_H_INCLUDED
