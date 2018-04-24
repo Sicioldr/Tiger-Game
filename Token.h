@@ -23,6 +23,9 @@ public:
 
     //Change value of location
     void moveToNode(int destination);
+
+    //Check adjacencies
+    bool checkAdjacent(int target);
 };
 
 class Hunter : public Token{
