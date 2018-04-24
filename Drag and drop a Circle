@@ -1,0 +1,61 @@
+#include <iostream>
+
+#include "SDL_Plotter.h"
+#include "Circle.h"
+
+using namespace std;
+
+const int CIRCLE_RADIUS = 14;
+
+void closestVertex(int &x, int &y) {
+    x = ((x + 50) / 100) * 100;
+    y = ((y + 50) / 100) * 100;
+}
+
+void drawCircle(SDL_Plotter &g, int x, int y, Color c){
+    for(int xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && x + xd < g.getCol() && x + xd > 0; xd++ ){
+        for(int yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && y + yd < g.getRow() && y + yd > 0; yd++ ){
+            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS){
+                g.plotPixel( x + xd, y + yd, c.R, c.G, c.B);
+            }
+        }
+    }
+}
+
+int main(int argc, char ** argv)
+{
+
+    SDL_Plotter g(1000,1000);
+    int x,y;
+    Circle c(500, 500, BLUE);
+
+
+    while (!g.getQuit())
+    {
+
+        drawCircle(g, c.getX(), c.getY(), c.getColor());
+
+
+        if(g.getMouseDown(x,y)){
+            if(abs(x - c.getX()) < CIRCLE_RADIUS && abs(y - c.getY()) < CIRCLE_RADIUS){
+                c.setColor(RED);
+                while(!g.getMouseUp(x, y)){
+
+                    drawCircle(g, c.getX(), c.getY(), BACKGROUND);
+                    g.getMouseLocation(x, y);
+
+                    c.setLocation(x, y);
+
+                    drawCircle(g, c.getX(), c.getY(), c.getColor());
+                    g.update();
+                }
+                c.setColor(BLUE);
+                closestVertex(x,y);
+                drawCircle(g, c.getX(), c.getY(), BACKGROUND);
+                c.setLocation(x, y);
+            }
+        }
+
+        g.update();
+    }
+}
