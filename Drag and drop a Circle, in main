@@ -1,0 +1,27 @@
+if(g.getMouseDown(x,y)){
+            if(abs(x - c.getX()) < CIRCLE_RADIUS && abs(y - c.getY()) < CIRCLE_RADIUS){
+                c.setColor(RED);
+                while(!g.getMouseUp(x, y)){
+
+                    for(xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && c.getX() + xd < g.getCol() && c.getX() + xd > 0; xd++ ){
+                        for(yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && c.getY() + yd < g.getRow() && c.getY() + yd > 0; yd++ ){
+                            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS){
+                                g.plotPixel( c.getX() + xd, c.getY() + yd, BACKGROUND.R, BACKGROUND.G, BACKGROUND.B);
+                            }
+                        }
+                    }
+                    g.getMouseLocation(x, y);
+                    c.setLocation(x, y);
+
+                    for(xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && c.getX() + xd < g.getCol() && c.getX() + xd > 0; xd++ ){
+                        for(yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && c.getY() + yd < g.getRow() && c.getY() + yd > 0; yd++ ){
+                            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS){
+                                g.plotPixel( c.getX() + xd, c.getY() + yd, c.getColor().R, c.getColor().G, c.getColor().B);
+                            }
+                        }
+                    }
+                    g.update();
+                }
+                c.setColor(BLUE);
+            }
+        }
