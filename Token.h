@@ -23,9 +23,6 @@ public:
 
     //Change value of location
     void moveToNode(int destination);
-
-    //Check adjacencies
-    bool checkAdjacent(int target);
 };
 
 class Hunter : public Token{
@@ -35,6 +32,12 @@ private:
 public:
     //Adds value for isAlive to constructor
     Hunter();
+
+    //Getter for isAlive
+    bool vivaciousness();
+
+    //Setter for isAlive
+    void kill();
 
     //Return true
     bool isTiger();
