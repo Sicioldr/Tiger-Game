@@ -1,4 +1,4 @@
-#include "Board.h"
+#include "../Board.h"
 
 //Constructor
 Board::Board(){
@@ -21,8 +21,13 @@ Board::Board(){
     this->arrangeNodes();
 }
 
-///Rework when coordinates are known; use coefficient on iterator
+///Might be able to obviate the stuff in the comment block; coords might be unneeded
 void Board::arrangeNodes(){
+    for(int i = 0; i < GAME_SIZE; i++){
+        this->spots[i].setPosition(i);
+    }
+
+    /*
     int manicule = -1; //Holds current row; moves up to 0 immediately
 
     //Assign coords to Lair
@@ -57,18 +62,26 @@ void Board::arrangeNodes(){
              << ", " << spots[i + LAIR_ROOT * LAIR_ROOT].getY()
              << ")" << endl;
     }
+     */
 }
 
-Direction Board::checkAdjacent(int origin, int target){
-    //Set default state
-    Direction decision = None;
+//WIP
+bool Board::checkAdjacency(int first, int second){
+    //On Luke's computer
 
-    //If w/in Lair
-    if(target >= 0 && target < LAIR_ROOT){
-        if(){
+    return true;
+}
 
-        }
+//Need target to detect when it is hit
+bool Board::setUpPounce(Tiger emptyStomach, int target){
+    bool canPounce = false;
+    int midpoint = (emptyStomach.getLocation() + snack.getLocation) / 2;
+
+    //Make sure that:
+    //  points are adjacent in relevant pairs
+    //  midpoint is actually occupied
+    if(checkAdjacency(emptyStomach.getLocation(), midpoint) && checkAdjacency(midpoint, snack.getLocation)
+            && this->spots[midpoint].isOccupied() && ){
+
     }
-
-
 }
