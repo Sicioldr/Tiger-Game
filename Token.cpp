@@ -50,6 +50,17 @@ Hunter::Hunter(){
     this->isAlive = true;
 }
 
+//Simple getter
+bool Hunter::vivaciousness(){
+
+    return this->isAlive;
+}
+
+//Ouch
+void Hunter::kill(){
+    this->isAlive = false;
+}
+
 //Hard false
 bool Hunter::isTiger(){
 
