@@ -11,8 +11,8 @@ private:
     int x_location, y_location;
 
 public:
-    Circle(int x, int y, Color c){
-        c.setColor(c);
+    Circle(int x, int y, Color co){
+        c.setColor(co);
         x_location = x;
         y_location = y;
     }
