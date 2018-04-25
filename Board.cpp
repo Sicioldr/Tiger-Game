@@ -1,87 +1,44 @@
-#include "../Board.h"
+#ifndef BOARD_H_INCLUDED
+#define BOARD_H_INCLUDED
 
-//Constructor
-Board::Board(){
-    //Place tiger
-    this->shereKhan.moveToNode((LAIR_ROOT * LAIR_ROOT) / 2);
-    this->spots[(LAIR_ROOT * LAIR_ROOT) / 2].setOccupied(true);
+#include <cmath>
+#include <iostream>
 
-    cout << "Placing Tiger at " << (LAIR_ROOT * LAIR_ROOT) / 2 << endl;
+#include "Token.h"
 
-    //Populate bottom w/ hunters
-    this->hunterPopulation = HUNTER_COUNT;
+using namespace std;
 
-    for(int i = 0; i < HUNTER_COUNT; i++){
-        this->jaeger[i].moveToNode(GAME_SIZE - HUNTER_COUNT + i);
-        this->spots[GAME_SIZE - HUNTER_COUNT + i].setOccupied(true);
+const int GAME_SIZE = 90;
+const int HUNTER_COUNT = 18;
+const int LAIR_ROOT = 3;
+const int FIELD_ROOT = 9;
 
-        cout << "Hunter at " << GAME_SIZE - HUNTER_COUNT + i << endl;
-    }
+class Board{
+private:
+    Tiger shereKhan;
+    Hunter jaeger[HUNTER_COUNT];
+    Node spots[GAME_SIZE];
+    int hunterPopulation;
+    //Yes, this is gross, and yes, it's only used for one function - thank my stupid layout system
+    int topLandmark = ceil(FIELD_ROOT / 2 ) + LAIR_ROOT * LAIR_ROOT,
+        botLandmark = GAME_SIZE - 1 - (FIELD_ROOT / 2),
+        center = (LAIR_ROOT * LAIR_ROOT) + (FIELD_ROOT * FIELD_ROOT / 2);
 
-    this->arrangeNodes();
-}
+    //Might become obsolete
+    void arrangeNodes();
 
-///Might be able to obviate the stuff in the comment block; coords might be unneeded
-void Board::arrangeNodes(){
-    for(int i = 0; i < GAME_SIZE; i++){
-        this->spots[i].setPosition(i);
-    }
+public:
+    Board();
 
-    /*
-    int manicule = -1; //Holds current row; moves up to 0 immediately
+    //Saves space in other functions
+    bool isOnBoard(int location);
+    bool isInLair(int location);
 
-    //Assign coords to Lair
-    for(int i = 0; i < LAIR_ROOT * LAIR_ROOT - 1; i++){
-        ///This is a placeholder for a subfunction that can arrange Lair on diagonal
-        //When at beginning of row, advance indicator
-        if(i % LAIR_ROOT == 0){
-            manicule++;
-        }
+    //Supporting function for checkAdjacent
+    bool onDiagonal(int location);
 
-        spots[i].setY(manicule);
-        spots[i].setX(i % LAIR_ROOT);
+    //Check adjacencies
+    bool checkAdjacent(int origin, int target);
+};
 
-        cout << "Node " << i << ": (" << spots[i].getX()
-             << ", " << spots[i].getY()
-             << ")" << endl;
-    }
-
-    manicule = -1; //Reset for Field
-
-    //Assign coords to Field
-    for(int i = 0; i < FIELD_ROOT * FIELD_ROOT; i++){
-        if(i % FIELD_ROOT == 0){
-            manicule++;
-        }
-
-        spots[i + LAIR_ROOT * LAIR_ROOT].setY(manicule);
-        spots[i + LAIR_ROOT * LAIR_ROOT].setX(i % FIELD_ROOT);
-
-        cout << "Node " << i + LAIR_ROOT * LAIR_ROOT
-             << ": (" << spots[i + LAIR_ROOT * LAIR_ROOT].getX()
-             << ", " << spots[i + LAIR_ROOT * LAIR_ROOT].getY()
-             << ")" << endl;
-    }
-     */
-}
-
-//WIP
-bool Board::checkAdjacency(int first, int second){
-    //On Luke's computer
-
-    return true;
-}
-
-//Need target to detect when it is hit
-bool Board::setUpPounce(Tiger emptyStomach, int target){
-    bool canPounce = false;
-    int midpoint = (emptyStomach.getLocation() + snack.getLocation) / 2;
-
-    //Make sure that:
-    //  points are adjacent in relevant pairs
-    //  midpoint is actually occupied
-    if(checkAdjacency(emptyStomach.getLocation(), midpoint) && checkAdjacency(midpoint, snack.getLocation)
-            && this->spots[midpoint].isOccupied() && ){
-
-    }
-}
+#endif // BOARD_H_INCLUDED
