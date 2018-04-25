@@ -7,6 +7,10 @@
  * Date Last Modified: 04/25/2018
  */
 
+/*
+ * Still working on the main
+ */
+
 #include <iostream>
 #include "SDL_Plotter.h"    // header needed to use the SDL_Plotter class
 #include "GameEngine.h"     // header needed to use the GameEngine class
