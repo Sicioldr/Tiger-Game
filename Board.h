@@ -8,12 +8,13 @@
 
 using namespace std;
 
-enum Direction {Up, Down, Left, Right, UpLeft, DownLeft, UpRight, DownRight, None};
+enum Direction {None, Up, Down, Left, Right, UpLeft, DownLeft, UpRight, DownRight};
 
 const int GAME_SIZE = 90;
 const int HUNTER_COUNT = 18;
 const int LAIR_ROOT = 3;
 const int FIELD_ROOT = 9;
+const int SPOT_SPACING = 50;
 
 class Board{
 private:
@@ -41,6 +42,9 @@ public:
 
     //Check adjacencies
     Direction checkAdjacency(int origin, int target);
+
+    //See if a Node index is a possible candidate for landing over a Hunter
+    bool tryPounce(int target, Tiger hobbes);
 };
 
 #endif // BOARD_H_INCLUDED
