@@ -1,0 +1,85 @@
+#include <iostream>
+
+#include "SDL_Plotter.h"
+#include "Circle.h"
+#include "Board.h"
+
+using namespace std;
+
+const int CIRCLE_RADIUS = 14;
+
+void closestVertex(int &x, int &y) {
+    x = ((x + 50) / 100) * 100;
+    y = ((y + 50) / 100) * 100;
+}
+
+void drawCircle(SDL_Plotter &g, int x, int y, Color c){
+    for(int xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && x + xd < g.getCol() && x + xd > 0; xd++ ){
+        for(int yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && y + yd < g.getRow() && y + yd > 0; yd++ ){
+            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS){
+                g.plotPixel( x + xd, y + yd, c.R, c.G, c.B);
+            }
+        }
+    }
+}
+
+int main(int argc, char ** argv)
+{
+    SDL_Plotter g(1000, 1000);
+    int x,y;
+    Circle circles[19];
+
+    for(int i = 0; i < 19; i++){
+
+        bool occupied;
+        do{
+            occupied = false;
+            x = (rand() % (g.getCol() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
+            y = (rand() % (g.getRow() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
+
+            for(int j = 0; j < i; j++){
+                if(abs(circles[j].getX() - x) <= CIRCLE_RADIUS*2 && abs(circles[j].getY() - y) <= CIRCLE_RADIUS*2 )
+                    occupied = true;
+            }
+        }while(occupied);
+
+        circles[i].setLocation(x, y);
+        circles[i].setColor(BLUE);
+    }
+    circles[0].setColor(RED);
+
+
+    while (!g.getQuit())
+    {
+        for(int i = 0; i < 19; i++){
+            drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
+        }
+
+        if(g.getMouseDown(x,y)){
+            for(int i = 0; i < 19; i++){
+                if(abs(x - circles[i].getX()) < CIRCLE_RADIUS && abs(y - circles[i].getY()) < CIRCLE_RADIUS){
+                    circles[i].setColor(GREEN);
+                    while(!g.getMouseUp(x, y)){
+
+                        drawCircle(g, circles[i].getX(), circles[i].getY(), BACKGROUND);
+                        g.getMouseLocation(x, y);
+
+                        circles[i].setLocation(x, y);
+
+                        drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
+                        g.update();
+                    }
+                    if(i > 0)
+                        circles[i].setColor(BLUE);
+                    else
+                        circles[i].setColor(RED);
+                    //closestVertex(x,y);
+                    drawCircle(g, circles[i].getX(), circles[i].getY(), BACKGROUND);
+                    circles[i].setLocation(x, y);
+                }
+            }
+        }
+
+        g.update();
+    }
+}
