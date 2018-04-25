@@ -10,8 +10,8 @@ using namespace std;
 const int CIRCLE_RADIUS = 12;
 
 void closestVertex(int &x, int &y) {
-    x = ((x + 50) / 100) * 100;
-    y = ((y + 50) / 100) * 100;
+    x = ((x + 30) / 60) * 60;
+    y = ((y + 30) / 60) * 60;
 }
 
 void drawCircle(SDL_Plotter &g, int x, int y, Color c){
@@ -38,9 +38,10 @@ int main(int argc, char ** argv)
             occupied = false;
             x = (rand() % (g.getCol() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
             y = (rand() % (g.getRow() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
+            closestVertex(x, y);
 
             for(int j = 0; j < i; j++){
-                if(abs(circles[j].getX() - x) <= CIRCLE_RADIUS*2 && abs(circles[j].getY() - y) <= CIRCLE_RADIUS*2)
+                if(circles[j].getX() == x && circles[j].getY() == y)
                     occupied = true;
             }
         }while(occupied);
@@ -70,6 +71,8 @@ int main(int argc, char ** argv)
 
                             circles[i].setLocation(x, y);
 
+                            for(int j = 0; j < 19; j++)
+                                drawCircle(g, circles[j].getX(), circles[j].getY(), circles[j].getColor());
                             drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
                             g.update();
                         }
@@ -78,7 +81,7 @@ int main(int argc, char ** argv)
                         circles[i].setColor(BLUE);
                     else
                         circles[i].setColor(RED);
-                    //closestVertex(x,y);
+                    closestVertex(x,y);
                     drawCircle(g, circles[i].getX(), circles[i].getY(), BACKGROUND);
                     circles[i].setLocation(x, y);
                 }
