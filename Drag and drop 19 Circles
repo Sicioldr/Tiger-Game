@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include "SDL_Plotter.h"
 #include "Circle.h"
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-const int CIRCLE_RADIUS = 14;
+const int CIRCLE_RADIUS = 12;
 
 void closestVertex(int &x, int &y) {
     x = ((x + 50) / 100) * 100;
@@ -25,7 +26,8 @@ void drawCircle(SDL_Plotter &g, int x, int y, Color c){
 
 int main(int argc, char ** argv)
 {
-    SDL_Plotter g(1000, 1000);
+    srand(time(NULL));
+    SDL_Plotter g(650, 450);
     int x,y;
     Circle circles[19];
 
@@ -38,7 +40,7 @@ int main(int argc, char ** argv)
             y = (rand() % (g.getRow() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
 
             for(int j = 0; j < i; j++){
-                if(abs(circles[j].getX() - x) <= CIRCLE_RADIUS*2 && abs(circles[j].getY() - y) <= CIRCLE_RADIUS*2 )
+                if(abs(circles[j].getX() - x) <= CIRCLE_RADIUS*2 && abs(circles[j].getY() - y) <= CIRCLE_RADIUS*2)
                     occupied = true;
             }
         }while(occupied);
@@ -61,13 +63,16 @@ int main(int argc, char ** argv)
                     circles[i].setColor(GREEN);
                     while(!g.getMouseUp(x, y)){
 
-                        drawCircle(g, circles[i].getX(), circles[i].getY(), BACKGROUND);
-                        g.getMouseLocation(x, y);
+                        if(g.getMouseMotion(x,y)) {
+                            drawCircle(g, circles[i].getX(), circles[i].getY(), BACKGROUND);
 
-                        circles[i].setLocation(x, y);
+                            g.getMouseLocation(x, y);
 
-                        drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
-                        g.update();
+                            circles[i].setLocation(x, y);
+
+                            drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
+                            g.update();
+                        }
                     }
                     if(i > 0)
                         circles[i].setColor(BLUE);
