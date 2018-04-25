@@ -15,6 +15,7 @@ void Node::setIdentity(int nomDeGuerre){
     this->identity = nomDeGuerre;
 }
 
+/*
 //Set column
 void Node::setX(int x){
     this->relativeX = x;
@@ -36,3 +37,4 @@ int Node::getY(){
 
     return this->relativeY;
 }
+*/
