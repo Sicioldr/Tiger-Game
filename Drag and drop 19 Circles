@@ -24,6 +24,19 @@ void drawCircle(SDL_Plotter &g, int x, int y, Color c){
     }
 }
 
+void plotGrid(SDL_Plotter &g){
+    for(int i = 60; i < 650; i += 60){
+        for(int j = 0; j < 450; j ++){
+            g.plotPixel(j, i, BLACK.R, BLACK.G, BLACK.B);
+        }
+    }
+    for(int i = 60; i < 450; i += 60){
+        for(int j = 0; j < 650; j ++){
+            g.plotPixel(i, j, BLACK.R, BLACK.G, BLACK.B);
+        }
+    }
+}
+
 int main(int argc, char ** argv)
 {
     srand(time(NULL));
@@ -32,7 +45,6 @@ int main(int argc, char ** argv)
     Circle circles[19];
 
     for(int i = 0; i < 19; i++){
-
         bool occupied;
         do{
             occupied = false;
@@ -54,6 +66,8 @@ int main(int argc, char ** argv)
 
     while (!g.getQuit())
     {
+        plotGrid(g);
+
         for(int i = 0; i < 19; i++){
             drawCircle(g, circles[i].getX(), circles[i].getY(), circles[i].getColor());
         }
@@ -70,6 +84,8 @@ int main(int argc, char ** argv)
                             g.getMouseLocation(x, y);
 
                             circles[i].setLocation(x, y);
+
+                            plotGrid(g);
 
                             for(int j = 0; j < 19; j++)
                                 drawCircle(g, circles[j].getX(), circles[j].getY(), circles[j].getColor());
