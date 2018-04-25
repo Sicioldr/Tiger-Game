@@ -15,12 +15,8 @@ Board::Board(){
     }
 
     //this->arrangeNodes();
-    for(int i = 0; i < GAME_SIZE; i++){
-        this->spots[i].setIdentity(i);
-    }
 }
 
-/*
 ///Rework when coordinates are known; use coefficient on iterator
 void Board::arrangeNodes(){
     int manicule = -1; //Holds current row; moves up to 0 immediately
@@ -33,8 +29,8 @@ void Board::arrangeNodes(){
             manicule++;
         }
 
-        spots[i].setY(manicule);
-        spots[i].setX(i % LAIR_ROOT);
+        spots[i].setY(manicule * SPOT_SPACING);
+        spots[i].setX((i % LAIR_ROOT) * SPOT_SPACING);
 
         cout << "Node " << i << ": (" << spots[i].getX()
              << ", " << spots[i].getY()
@@ -49,8 +45,8 @@ void Board::arrangeNodes(){
             manicule++;
         }
 
-        spots[i + LAIR_ROOT * LAIR_ROOT].setY(manicule);
-        spots[i + LAIR_ROOT * LAIR_ROOT].setX(i % FIELD_ROOT);
+        spots[i + LAIR_ROOT * LAIR_ROOT].setY(manicule * SPOT_SPACING);
+        spots[i + LAIR_ROOT * LAIR_ROOT].setX((i % FIELD_ROOT) * SPOT_SPACING);
 
         cout << "Node " << i + LAIR_ROOT * LAIR_ROOT
              << ": (" << spots[i + LAIR_ROOT * LAIR_ROOT].getX()
@@ -58,7 +54,6 @@ void Board::arrangeNodes(){
              << ")" << endl;
     }
 }
-*/
 
 bool Board::isOnBoard(int location){
     bool returnValue = false;
@@ -170,4 +165,18 @@ Direction Board::checkAdjacency(int origin, int target){
     }
 
     return decision;
+}
+
+bool Board::tryPounce(int target, Tiger hobbes){
+    bool canPounce = false;
+    int quarry = (hobbes.getLocation() + target) / 2;
+
+    if(this->spots[quarry].getOccupied() && !spots[target].getOccupied() &&
+       this->checkAdjacency(hobbes.getLocation(), quarry) != None &
+       this->checkAdjacency(quarry, target) &&
+       this->checkAdjacency(hobbes.getLocation(), quarry) == this->checkAdjacency(quarry, target)){
+        canPounce = true;
+    }
+
+    return canPounce;
 }
