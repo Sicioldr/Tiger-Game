@@ -7,6 +7,11 @@
  * Date Last Modified: 04/25/2018
  */
 
+/*
+* This is a compilation of all the functions so far that were not within a class.
+* Just a way of cleaning up the main.
+*/
+
 #ifndef GAMEENGINE_H_INCLUDED
 #define GAMEENGINE_H_INCLUDED
 
@@ -29,6 +34,7 @@ public:
     void closestVertex(int &x, int &y);
 };
 
+// Roy's plotBoard (working)
 void GameEngine::plotBoard(SDL_Plotter &g)
 {
     int X = 450;
@@ -135,6 +141,7 @@ void GameEngine::plotBoard(SDL_Plotter &g)
   g.update();
 }
 
+// Jacob's (he had this in his main)(in progress)
 void GameEngine::plotTokens(SDL_Plotter &g)
 {
     // Draw circle to screen
@@ -168,6 +175,7 @@ void GameEngine::plotTokens(SDL_Plotter &g)
     }
 }
 
+// Roy's printScreen(working)
 void GameEngine::printScreen(SDL_Plotter &g)
 {
     // T
@@ -501,6 +509,7 @@ void GameEngine::printScreen(SDL_Plotter &g)
     g.clear();
 }
 
+// Jacob's drawCircle (working)(was on main)
 void GameEngine::drawCircle(SDL_Plotter &g, int x, int y, Color c)
 {
     for(int xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && x + xd < g.getCol() && x + xd > 0; xd++ )
@@ -515,6 +524,7 @@ void GameEngine::drawCircle(SDL_Plotter &g, int x, int y, Color c)
     }
 }
 
+// Jacob's closestVertex(working)(was on main)
 void GameEngine::closestVertex(int &x, int &y)
 {
     x = ((x + 50) / 100) * 100;
