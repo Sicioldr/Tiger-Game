@@ -3,11 +3,16 @@
 //Constructor
 Node::Node(){
     this->occupied = false;
+    this->identity = -1;
 }
 
 //Switch state of occupied
 void Node::setOccupied(bool status){
     this->occupied = status;
+}
+
+void Node::setIdentity(int nomDeGuerre){
+    this->identity = nomDeGuerre;
 }
 
 //Set column
