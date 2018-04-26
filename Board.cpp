@@ -172,11 +172,47 @@ bool Board::tryPounce(int target, Tiger hobbes){
     int quarry = (hobbes.getLocation() + target) / 2;
 
     if(this->spots[quarry].getOccupied() && !spots[target].getOccupied() &&
-       this->checkAdjacency(hobbes.getLocation(), quarry) != None &
+       this->checkAdjacency(hobbes.getLocation(), quarry) != None &&
        this->checkAdjacency(quarry, target) &&
        this->checkAdjacency(hobbes.getLocation(), quarry) == this->checkAdjacency(quarry, target)){
         canPounce = true;
     }
 
     return canPounce;
+}
+
+bool Board::tigerSurrounded(){
+    bool doomed = true;
+    int proximalTarget, distalTarget;
+    int relevantRoot = LAIR_ROOT;
+
+    for(int i = -1; i <= 1; i++){
+        for(int j = -1; j <= 1; j++){
+            proximalTarget = shereKhan.getLocation() + i + j*FIELD_ROOT;
+            distalTarget = shereKhan.getLocation() + 2*i + 2*j*FIELD_ROOT;
+            if(!this->spots[proximalTarget].getOccupied() ||
+               this->tryPounce(distalTarget, this->shereKhan)){
+                doomed = false;
+            }
+        }
+    }
+
+    return doomed;
+}
+
+//0: ongoing
+//1: Tiger win
+//-1: Hunter win
+int Board::gameComplete(){
+    int gameState = 0;
+
+    //Check for Tiger win
+    if(this->hunterPopulation < 4){
+        gameState = 1;
+    }
+    else if(this->tigerSurrounded()){
+        gameState = -1;
+    }
+
+    return gameState;
 }
