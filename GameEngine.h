@@ -1,16 +1,7 @@
 /*
- * Author: Arantxa Rodriguez
- * Assignment Title: Tiger Game
- * Assignment Description: This file implements a GameEngine class.
- * Due Date: 04/26/2018
- * Date Created: 04/11/2018
- * Date Last Modified: 04/25/2018
+ * This is a compilation of all the functions so far that were not within a class.
+ * Just a way of cleaning up the main.
  */
-
-/*
-* This is a compilation of all the functions so far that were not within a class.
-* Just a way of cleaning up the main.
-*/
 
 #ifndef GAMEENGINE_H_INCLUDED
 #define GAMEENGINE_H_INCLUDED
@@ -18,7 +9,7 @@
 #include <iostream>
 #include <cmath>             // header needed to
 #include "Token.h"           // header needed to use the Token class
-#include "Circle.h"           // header needed to use the Circle class
+#include "Circle.h"          // header needed to use the Circle class
 
 using namespace std;
 
@@ -144,33 +135,77 @@ void GameEngine::plotBoard(SDL_Plotter &g)
 // Jacob's (he had this in his main)(in progress)
 void GameEngine::plotTokens(SDL_Plotter &g)
 {
-    // Draw circle to screen
     int x, y;
-    Circle c(500, 500, BLUE);
-    drawCircle(g, c.getLocation().x, c.getLocation().y, c.getColor());
+    Circle circles[19];
 
-    // If the
+    for(int i = 0; i < 19; i++)
+    {
+        bool occupied;
+
+        do
+        {
+            occupied = false;
+            x = (rand() % (g.getCol() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
+            y = (rand() % (g.getRow() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
+            closestVertex(x, y);
+
+            for(int j = 0; j < i; j++)
+            {
+                if(circles[j].getLocation().x == x && circles[j].getLocation().y == y)
+                    occupied = true;
+            }
+
+        }while(occupied);
+
+        circles[i].setLocation(x, y);
+        circles[i].setColor(BLUE);
+    }
+
+    circles[0].setColor(RED);
+
+    for(int i = 0; i < 19; i++)
+    {
+        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, circles[i].getColor());
+    }
+
     if(g.getMouseDown(x,y))
     {
-        if(abs(x - c.getLocation().x) < CIRCLE_RADIUS && abs(y - c.getLocation().y) < CIRCLE_RADIUS)
+        for(int i = 0; i < 19; i++)
         {
-            c.setColor(RED);
-
-            // While
-            while(!g.getMouseUp(x, y))
+            if(abs(x - circles[i].getLocation().x) < CIRCLE_RADIUS && abs(y - circles[i].getLocation().y) < CIRCLE_RADIUS)
             {
-                drawCircle(g, c.getLocation().x, c.getLocation().y, BACKGROUND);
-                g.getMouseLocation(x, y);
+                circles[i].setColor(GREEN);
 
-                c.setLocation(x, y);
+                while(!g.getMouseUp(x, y))
+                {
 
-                drawCircle(g, c.getLocation().x, c.getLocation().y, c.getColor());
-                g.update();
+                    if(g.getMouseMotion(x,y))
+                    {
+                        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, BACKGROUND);
+
+                        g.getMouseLocation(x, y);
+
+                        circles[i].setLocation(x, y);
+
+
+                        for(int j = 0; j < 19; j++)
+                            drawCircle(g, circles[j].getLocation().x, circles[j].getLocation().y, circles[j].getColor());
+
+                        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, circles[i].getColor());
+                        g.update();
+                    }
+                }
+
+                if(i > 0)
+                    circles[i].setColor(BLUE);
+
+                else
+                    circles[i].setColor(RED);
+
+                closestVertex(x,y);
+                drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, BACKGROUND);
+                circles[i].setLocation(x, y);
             }
-            c.setColor(BLUE);
-            closestVertex(x,y);
-            drawCircle(g, c.getLocation().x, c.getLocation().y, BACKGROUND);
-            c.setLocation(x, y);
         }
     }
 }
