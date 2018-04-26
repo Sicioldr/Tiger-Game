@@ -33,10 +33,7 @@ public:
     //Adds value for isAlive to constructor
     Hunter();
 
-    //Getter for isAlive
-    bool vivaciousness();
-
-    //Setter for isAlive
+    //Turn isAlive to false
     void kill();
 
     //Return true
