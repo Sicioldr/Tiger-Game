@@ -1,7 +1,16 @@
 /*
- * This is a compilation of all the functions so far that were not within a class.
- * Just a way of cleaning up the main.
+ * Author: Arantxa Rodriguez
+ * Assignment Title: Tiger Game
+ * Assignment Description: This file implements a GameEngine class.
+ * Due Date: 04/26/2018
+ * Date Created: 04/11/2018
+ * Date Last Modified: 04/25/2018
  */
+
+/*
+* This is a compilation of all the functions so far that were not within a class.
+* Just a way of cleaning up the main.
+*/
 
 #ifndef GAMEENGINE_H_INCLUDED
 #define GAMEENGINE_H_INCLUDED
@@ -9,210 +18,124 @@
 #include <iostream>
 #include <cmath>             // header needed to
 #include "Token.h"           // header needed to use the Token class
-#include "Circle.h"          // header needed to use the Circle class
+#include "Circle.h"           // header needed to use the Circle class
+#include "SDL_Plotter.h"
 
 using namespace std;
 
-class GameEngine
-{
-private:
+const int CIRCLE_RADIUS = 12;
+const int SCALE = 50;
+const int XREF = 25;
+const int YREF = 225;
 
-public:
-    void plotBoard(SDL_Plotter &g); // GameBoard
-    void plotTokens(SDL_Plotter &g);  // Tokens
-    void printScreen(SDL_Plotter &g);   // Main Menu
-    void drawCircle(SDL_Plotter &g, int x, int y, Color c);
-    void closestVertex(int &x, int &y);
-};
-
-// Roy's plotBoard (working)
-void GameEngine::plotBoard(SDL_Plotter &g)
-{
-    int X = 450;
-    int Y = 650;
-
-    // horizontal line
-    for(int i = X-425; i < X-25; i++){
-        for(int j = Y-26; j < Y-25; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-76; j < Y-75; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-126; j < Y-125; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-176; j < Y-175; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-226; j < Y-225; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-276; j < Y-275; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-326; j < Y-325; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-376; j < Y-375; j++){
-            g.plotPixel(i, j, 0, 0, 0);
-        }
-        for(int j = Y-426; j < Y-425; j++){
-            g.plotPixel(i, j, 0, 0, 0);
+// Jacob's drawCircle (working)(was on main)
+void drawCircle(SDL_Plotter &g, int x, int y, Color c){
+    for(int xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && x + xd < g.getCol() && x + xd > 0; xd++ ){
+        for(int yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && y + yd < g.getRow() && y + yd > 0; yd++ ){
+            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS){
+                g.plotPixel( x + xd, y + yd, c.R, c.G, c.B);
+            }
         }
     }
-
-    // vertical line
-    for(int i = Y-425; i < Y-25; i++){
-        for(int j = X-26; j < X-25; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-76; j < X-75; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-126; j < X-125; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-176; j < X-175; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-226; j < X-225; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-276; j < X-275; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-326; j < X-325; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-376; j < X-375; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-        for(int j = X-426; j < X-425; j++){
-            g.plotPixel(j, i, 0, 0, 0);
-        }
-    }
-
-    // right slash
-    for(int i = X-325; i < X-25; i++){
-        int j = i;
-        g.plotPixel(i, j, 0, 0, 0);
-    }
-    for(int i = X-425; i < X-225; i++){
-        int j = i+400;
-        g.plotPixel(i, j, 0, 0, 0);
-    }
-    for(int i = X-275; i < X-175; i++){
-        int j = i-100;
-        g.plotPixel(i, j, 0, 0, 0);
-    }
-    for(int i = X-225; i < X-125; i++){
-        int j = i-200;
-        g.plotPixel(i, j, 0, 0, 0);
-    }
-
-    // left slash
-    for(int i = X-325; i < X-25; i++){
-        int j = i;
-        g.plotPixel(-i, j, 0, 0, 0);
-    }
-    for(int i = X-425; i < X-225; i++){
-        int j = i+400;
-        g.plotPixel(-i, j, 0, 0, 0);
-    }
-    for(int i = X-275; i < X-175; i++){
-        int j = i-100;
-        g.plotPixel(-i, j, 0, 0, 0);
-    }
-    for(int i = X-225; i < X-125; i++){
-        int j = i-200;
-        g.plotPixel(-i, j, 0, 0, 0);
-    }
-
-  g.update();
 }
 
-// Jacob's (he had this in his main)(in progress)
-void GameEngine::plotTokens(SDL_Plotter &g)
-{
-    int x, y;
-    Circle circles[19];
+// returns if there is a close vertex
+bool closestVertex(int &x, int &y) {
+    bool valid = true;
+    if (y > YREF - SCALE/2){
+        x -= XREF;
+        x = ((x + SCALE/2) / SCALE) * SCALE;
+        if(x < 0)
+            x = 0;
+        if(x > SCALE * 8)
+            x = SCALE * 8;
+        x += XREF;
 
-    for(int i = 0; i < 19; i++)
-    {
-        bool occupied;
+        y -= YREF;
+        y = ((y + SCALE/2) / SCALE) * SCALE;
+        if(y > SCALE * 8)
+            y = SCALE * 8;
+        y += YREF;
+    }
+    else{
+        if(x < XREF + (1.5*SCALE) || x > XREF + (7.5*SCALE))
+            valid = false;
+        else{
+            y -= YREF;
+            y = ((y - SCALE/2) / SCALE) * SCALE;
+            if(y < -(SCALE*4))
+                y = -(SCALE*4);
+            y += YREF;
 
-        do
-        {
-            occupied = false;
-            x = (rand() % (g.getCol() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
-            y = (rand() % (g.getRow() - (CIRCLE_RADIUS * 2))) + CIRCLE_RADIUS;
-            closestVertex(x, y);
-
-            for(int j = 0; j < i; j++)
-            {
-                if(circles[j].getLocation().x == x && circles[j].getLocation().y == y)
-                    occupied = true;
+            if(y == YREF - (4*SCALE)){
+                x = XREF + (4*SCALE);
             }
-
-        }while(occupied);
-
-        circles[i].setLocation(x, y);
-        circles[i].setColor(BLUE);
-    }
-
-    circles[0].setColor(RED);
-
-    for(int i = 0; i < 19; i++)
-    {
-        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, circles[i].getColor());
-    }
-
-    if(g.getMouseDown(x,y))
-    {
-        for(int i = 0; i < 19; i++)
-        {
-            if(abs(x - circles[i].getLocation().x) < CIRCLE_RADIUS && abs(y - circles[i].getLocation().y) < CIRCLE_RADIUS)
-            {
-                circles[i].setColor(GREEN);
-
-                while(!g.getMouseUp(x, y))
-                {
-
-                    if(g.getMouseMotion(x,y))
-                    {
-                        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, BACKGROUND);
-
-                        g.getMouseLocation(x, y);
-
-                        circles[i].setLocation(x, y);
-
-
-                        for(int j = 0; j < 19; j++)
-                            drawCircle(g, circles[j].getLocation().x, circles[j].getLocation().y, circles[j].getColor());
-
-                        drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, circles[i].getColor());
-                        g.update();
-                    }
-                }
-
-                if(i > 0)
-                    circles[i].setColor(BLUE);
-
+            else if(y == YREF - (3*SCALE)){
+                if(x < XREF + (4*SCALE))
+                    x = XREF + (3*SCALE);
                 else
-                    circles[i].setColor(RED);
-
-                closestVertex(x,y);
-                drawCircle(g, circles[i].getLocation().x, circles[i].getLocation().y, BACKGROUND);
-                circles[i].setLocation(x, y);
+                    x = XREF + (5*SCALE);
+            }
+            else if(y == YREF - (2*SCALE)){
+                if(x < XREF + (3*SCALE))
+                    x = XREF + (2*SCALE);
+                else if(x > XREF + (5*SCALE))
+                    x = XREF + (6*SCALE);
+                else
+                    x = XREF + (4*SCALE);
+            }
+            else{
+                if(x < XREF + (4*SCALE))
+                    x = XREF + (3*SCALE);
+                else
+                    x = XREF + (5*SCALE);
             }
         }
     }
+    return valid;
 }
 
-// Roy's printScreen(working)
-void GameEngine::printScreen(SDL_Plotter &g)
-{
+int vertexToNode(int x, int y){
+    int index;
+    x = (x - XREF) / SCALE;
+    y = (y - YREF) / SCALE;
+
+    if(y >= 0){
+        index = 9;
+        for(int i = 0; i < x; i++)
+            index++;
+        for(int i = 0; i < y; i++)
+            index += 9;
+    }
+    else{
+        if(x == 2)
+            index = 0;
+        else if(x == 3){
+            if(y == -3)
+                index = 1;
+            else
+                index = 3;
+        }
+        else if(x == 4){
+            if(y == -4)
+                index = 2;
+            else
+                index = 4;
+        }
+        else if(x == 5){
+            if(y == -3)
+                index = 5;
+            else
+                index = 7;
+        }
+        else {
+            index = 8;
+        }
+    }
+    return index;
+}
+
+void printStartScreen(SDL_Plotter &g){
     // T
     for(int i = 50; i < 100; i++){
         for(int j = 150; j < 156; j++){
@@ -422,7 +345,6 @@ void GameEngine::printScreen(SDL_Plotter &g)
             g.plotPixel(i, j, 0, 0, 0);
         }
     }
-
     //n
     for(int i = 100; i < 130; i++){
         for(int j = 500; j < 503; j++){
@@ -536,34 +458,10 @@ void GameEngine::printScreen(SDL_Plotter &g)
 
     g.update();
 
-    while(!g.kbhit())
-    {
+    while(!g.kbhit()){
         g.Sleep(1);
     }
-
     g.clear();
-}
-
-// Jacob's drawCircle (working)(was on main)
-void GameEngine::drawCircle(SDL_Plotter &g, int x, int y, Color c)
-{
-    for(int xd = -CIRCLE_RADIUS; xd < CIRCLE_RADIUS && x + xd < g.getCol() && x + xd > 0; xd++ )
-        {
-        for(int yd = -CIRCLE_RADIUS; yd < CIRCLE_RADIUS && y + yd < g.getRow() && y + yd > 0; yd++ )
-        {
-            if(sqrt(pow(xd,2) + pow(yd,2)) < CIRCLE_RADIUS)
-            {
-                g.plotPixel( x + xd, y + yd, c.R, c.G, c.B);
-            }
-        }
-    }
-}
-
-// Jacob's closestVertex(working)(was on main)
-void GameEngine::closestVertex(int &x, int &y)
-{
-    x = ((x + 50) / 100) * 100;
-    y = ((y + 50) / 100) * 100;
 }
 
 #endif // GAMEENGINE_H_INCLUDED
