@@ -668,7 +668,7 @@ void printEndScreen(SDL_Plotter &g){
     g.update();
 
     while(!g.kbhit()){
-        g.Sleep(3);
+        g.Sleep(1);
     }
     g.clear();
     g.setQuit(true);
