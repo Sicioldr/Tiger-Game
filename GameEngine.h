@@ -18,7 +18,6 @@
 #include <iostream>
 #include <cmath>             // header needed to
 #include "Token.h"           // header needed to use the Token class
-#include "Circle.h"           // header needed to use the Circle class
 #include "SDL_Plotter.h"
 
 using namespace std;
@@ -462,6 +461,217 @@ void printStartScreen(SDL_Plotter &g){
         g.Sleep(1);
     }
     g.clear();
+}
+
+void printEndScreen(SDL_Plotter &g){
+    // G
+    for(int i = 35; i < 115; i++){
+        for(int j = 200; j < 208; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 35; i < 43; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 35; i < 115; i++){
+        for(int j = 272; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 75; i < 115; i++){
+        for(int j = 236; j < 244; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 107; i < 115; i++){
+        for(int j = 240; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // A
+    for(int i = 135; i < 215; i++){
+        for(int j = 200; j < 208; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 135; i < 143; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 207; i < 215; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 135; i < 215; i++){
+        for(int j = 240; j < 248; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // M
+    for(int i = 235; i < 315; i++){
+        for(int j = 200; j < 208; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 235; i < 243; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 307; i < 315; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 271; i < 279; i++){
+        for(int j = 200; j < 260; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // E
+    for(int i = 335; i < 415; i++){
+        for(int j = 200; j < 208; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 335; i < 415; i++){
+        for(int j = 272; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 335; i < 343; i++){
+        for(int j = 200; j < 280; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 335; i < 395; i++){
+        for(int j = 236; j < 244; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // O
+    for(int i = 35; i < 115; i++){
+        for(int j = 320; j < 328; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 35; i < 43; i++){
+        for(int j = 320; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 35; i < 115; i++){
+        for(int j = 392; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 107; i < 115; i++){
+        for(int j = 320; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // V
+    for(int i = 135; i < 145; i++){
+        for(int j = 320; j < 340; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 145; i < 155; i++){
+        for(int j = 340; j < 360; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 155; i < 165; i++){
+        for(int j = 360; j < 380; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 165; i < 185; i++){
+        for(int j = 380; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 185; i < 195; i++){
+        for(int j = 360; j < 380; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 195; i < 205; i++){
+        for(int j = 340; j < 360; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 205; i < 215; i++){
+        for(int j = 320; j < 340; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // E
+    for(int i = 235; i < 315; i++){
+        for(int j = 320; j < 328; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 235; i < 315; i++){
+        for(int j = 392; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 235; i < 243; i++){
+        for(int j = 320; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 235; i < 295; i++){
+        for(int j = 356; j < 364; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    // R
+    for(int i = 335; i < 415; i++){
+        for(int j = 320; j < 328; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 335; i < 415; i++){
+        for(int j = 342; j < 350; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 335; i < 343; i++){
+        for(int j = 320; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 407; i < 415; i++){
+        for(int j = 320; j < 350; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+    for(int i = 391; i < 399; i++){
+        for(int j = 350; j < 400; j++){
+            g.plotPixel(i, j, 0, 0, 0);
+        }
+    }
+
+    g.update();
+
+    while(!g.kbhit()){
+        g.Sleep(3);
+    }
+    g.clear();
+    g.setQuit(true);
 }
 
 #endif // GAMEENGINE_H_INCLUDED

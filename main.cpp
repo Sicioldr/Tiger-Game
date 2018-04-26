@@ -22,7 +22,7 @@ int main(int argc, char ** argv)
         if(g.getMouseClick(x,y)){
             if(tigerTurn){
                 if(abs(x - b.spots[b.shereKhan.getLocation()].getX()) < CIRCLE_RADIUS && abs(y - b.spots[b.shereKhan.getLocation()].getY()) < CIRCLE_RADIUS){
-                    b.shereKhan.setColor(BLACK);
+                    b.shereKhan.setColor(lightcoral);
                     int oldX = b.spots[b.shereKhan.getLocation()].getX();
                     int oldY = b.spots[b.shereKhan.getLocation()].getY();
                     while(!g.getMouseClick(x, y)){
@@ -59,7 +59,7 @@ int main(int argc, char ** argv)
             else{
                 for(int i = 0; i < HUNTER_COUNT; i++){
                     if(abs(x - b.spots[b.jaeger[i].getLocation()].getX()) < CIRCLE_RADIUS && abs(y - b.spots[b.jaeger[i].getLocation()].getY()) < CIRCLE_RADIUS){
-                        b.jaeger[i].setColor(BLACK);
+                        b.jaeger[i].setColor(cornflowerblue);
                         int oldX = b.spots[b.jaeger[i].getLocation()].getX();
                         int oldY = b.spots[b.jaeger[i].getLocation()].getY();
                         while(!g.getMouseClick(x, y)){
@@ -97,12 +97,23 @@ int main(int argc, char ** argv)
             b.plotBoard(g);
             b.plotTokens(g);
 
+            if(tigerTurn)
+                drawCircle(g, CIRCLE_RADIUS + 10, CIRCLE_RADIUS + 10, RED);
+            else
+                drawCircle(g, CIRCLE_RADIUS + 10, CIRCLE_RADIUS + 10, BLUE);
+
             g.update();
             gameStatus = b.gameComplete();
             changed = false;
         }
+
+        if(g.kbhit()){
+            if(g.getKey() == 'X'){
+                gameStatus = 1;
+            }
+        }
     }
-    g.setQuit(true);
+    printEndScreen(g);
     cout << "GAME OVER" << endl;
-    //possible game over screen(gameStatus holds result), put function in GameEngine, see printStartScreen()
+
 }

@@ -32,6 +32,8 @@ const Color BLACK(0, 0, 0);
 const Color RED(220, 20, 20);
 const Color GREEN(20, 220, 20);
 const Color BLUE(20, 20, 220);
+const Color lightcoral(240, 128, 128);
+const Color cornflowerblue(100, 149, 237);
 
 
 #endif //GROUPPROJECT_COLOR_H
