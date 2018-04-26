@@ -1,5 +1,4 @@
 #include "Token.h"
-#include "Board.h"
 
 ///Token
 //Consider a different placeholder location
@@ -33,30 +32,12 @@ void Token::moveToNode(int destination){
     ///Do bulk of work in Board?
 }
 
-
-bool Token::checkAdjacent(int target){
-    //Set default state
-    bool decision = false;
-
-    ///The most recently updated version of this function is on my (Luke's) machine; will upload later this evening
-
-    return decision;
-}
-
-
 ///Hunter
 //Constructor
 Hunter::Hunter(){
     this->isAlive = true;
 }
 
-//Simple getter
-bool Hunter::vivaciousness(){
-
-    return this->isAlive;
-}
-
-//Ouch
 void Hunter::kill(){
     this->isAlive = false;
 }
@@ -73,4 +54,3 @@ bool Tiger::isTiger(){
 
     return true;
 }
-
