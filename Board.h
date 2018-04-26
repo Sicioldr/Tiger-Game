@@ -45,6 +45,10 @@ public:
 
     //See if a Node index is a possible candidate for landing over a Hunter
     bool tryPounce(int target, Tiger hobbes);
+
+    bool tigerSurrounded();
+
+    int gameComplete();
 };
 
 #endif // BOARD_H_INCLUDED
